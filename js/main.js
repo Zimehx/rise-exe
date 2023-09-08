@@ -706,7 +706,7 @@
                             position: t.length + 1,
                             text: i.name,
                             color: i.nameColorCss || "#ffffff",
-                            bold: !!i.perk_name_picked
+                            bold: !!i.nameColor
                         };
                         t.push(a)
                     }
@@ -2886,7 +2886,7 @@
                     return e = e ? parseInt(e, 16) : null, this.nameColor = e, this.nameColorCss = e && PIXI.utils.hex2string(e), e
                 }
                 setName(e, t) {
-                    return e || (e = "Unnamed"), (this.nameFromServer !== e || this.nameColorFromServer !== t) && (this.nameFromServer = e, this.nameColorFromServer = t, this.applyNameToSprite(), !0)
+                    return e || (e = "Unnamed"), (this.nameFromServer !== e || this.perk_color !== t) && (this.nameFromServer = e, this.perk_color = t, this.applyNameToSprite(), !0)
                 }
                 applyNameToSprite() {
                     let e = "Unnamed" === this.nameFromServer,
@@ -2895,7 +2895,7 @@
                         a = this.name,
                         n = this.nameColor,
                         o;
-                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.nameColorFromServer), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.nameColor) {
+                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.perk_color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.nameColor) {
                         let r = o || (this.isMe ? 16747520 : null);
                         h.events.$emit("minimap-create-node", this.pid, s, o, r)
                     }
@@ -3034,7 +3034,7 @@
                                 nickname: e.nameFromServer,
                                 skinUrl: e.skinUrl
                             };
-                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.nameColorFromServer && (t.nameColor = e.nameColorFromServer), t
+                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.perk_color && (t.nameColor = e.perk_color), t
                         }),
                         i = JSON.stringify(t);
                     i = unescape(encodeURIComponent(i));
@@ -7258,9 +7258,9 @@
                             }
                             ex.clearToken(), this.account = null, this.name = null, this.nameColor = null, this.avatarUrl = null, e8.ownUid = null
                         },
-                        getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".gif" : "https://cdn.discordapp.com/embed/avatars/0.png",
+                        getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".png" : "https://cdn.discordapp.com/embed/avatars/0.png",
                         setAccountData(e) {
-                            (window.gameObj = e8), GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.locked_name || e.discord_name, this.nameColor = e.perk_color ? "#" + e.perk_color : "#ffffff", e8.ownUid = e.uid
+                            e.permissions && (window.gameObj = e8), GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.locked_name || e.discord_name, this.nameColor = e.perk_color_picked ? "#" + e.perk_color_picked : "#ffffff", e8.ownUid = e.uid
                         },
                         onXpUpdate(e) {
                             if (this.account) {
