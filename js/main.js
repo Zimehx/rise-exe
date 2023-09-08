@@ -7150,7 +7150,7 @@
                         staticClass: "player-info"
                     }, [s("div", {
                         style: {
-                            color: e.perk_color
+                            color: e.perk_color_picked
                         },
                         attrs: {
                             id: "account-name"
