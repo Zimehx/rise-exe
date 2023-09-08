@@ -4,4 +4,4 @@ Currently archived and free to use. Very outdated from current vanis.io version 
 
 ### Installation
 - You will need [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) chrome extension (can be also found on other browsers)
-- Install the script from [here](https://raw.githubusercontent.com/zimehx/rise-exe/script.user.js)
+- Install the script from [here](https://github.com/Zimehx/rise-exe/raw/main/script.user.js)

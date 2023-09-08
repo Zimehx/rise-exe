@@ -706,7 +706,7 @@
                             position: t.length + 1,
                             text: i.name,
                             color: i.nameColorCss || "#ffffff",
-                            bold: !!i.nameColor
+                            bold: !!i.perk_name_picked
                         };
                         t.push(a)
                     }
@@ -7258,9 +7258,9 @@
                             }
                             ex.clearToken(), this.account = null, this.name = null, this.nameColor = null, this.avatarUrl = null, e8.ownUid = null
                         },
-                        getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".png" : "https://cdn.discordapp.com/embed/avatars/0.png",
+                        getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".gif" : "https://cdn.discordapp.com/embed/avatars/0.png",
                         setAccountData(e) {
-                            e.permissions && (window.gameObj = e8), GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.locked_name || e.discord_name, this.nameColor = e.perk_color_picked ? "#" + e.perk_color_picked : "#ffffff", e8.ownUid = e.uid
+                            (window.gameObj = e8), GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.locked_name || e.discord_name, this.nameColor = e.perk_color ? "#" + e.perk_color : "#ffffff", e8.ownUid = e.uid
                         },
                         onXpUpdate(e) {
                             if (this.account) {
