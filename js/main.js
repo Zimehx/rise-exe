@@ -705,8 +705,8 @@
                             pid: s,
                             position: t.length + 1,
                             text: i.name,
-                            color: i.nameColorCss || "#ffffff",
-                            bold: !!i.nameColor
+                            color: i.perk_colorCss || "#ffffff",
+                            bold: !!i.perk_color
                         };
                         t.push(a)
                     }
@@ -720,7 +720,7 @@
                         if (1 & s && (i.position = e.readUInt8()), 2 & s && (i.pid = e.readUInt16LE()), 4 & s) i.text = e.readEscapedString(), i.color = "#ffffff";
                         else {
                             let a = 2 & s && this.playerManager.getPlayer(i.pid);
-                            i.text = a ? a.name : "n/a", i.color = a && a.nameColorCss || "#ffffff"
+                            i.text = a ? a.name : "n/a", i.color = a && a.perk_colorCss || "#ffffff"
                         }
                         8 & s && (i.score = e.readEscapedString()), 16 & s && (i.color = "#" + ("00" + e.readUInt8().toString(16)).slice(-2) + ("00" + e.readUInt8().toString(16)).slice(-2) + ("00" + e.readUInt8().toString(16)).slice(-2)), 32 & s && (i.bold = !0), 64 & s && (i.link = e.readEscapedString()), t.push(i)
                     }
@@ -858,7 +858,7 @@
                             if (!S) return;
                             b.from = S.name;
                             let {
-                                nameColorCss: E
+                                perk_colorCss: E
                             } = S;
                             E && (b.fromColor = E), this.events.$emit("chat-message", b);
                             return
@@ -2786,7 +2786,7 @@
                     nickname: t,
                     skin: s,
                     skinUrl: i,
-                    nameColor: n,
+                    perk_color: n,
                     tagId: o,
                     bot: r
                 }) {
@@ -2883,7 +2883,7 @@
                     return e || (e = null), this.tagId !== e && (this.tagId = e, this.bot || this.setTagSprite(), !0)
                 }
                 setNameColor(e) {
-                    return e = e ? parseInt(e, 16) : null, this.nameColor = e, this.nameColorCss = e && PIXI.utils.hex2string(e), e
+                    return e = e ? parseInt(e, 16) : null, this.perk_color = e, this.perk_colorCss = e && PIXI.utils.hex2string(e), e
                 }
                 setName(e, t) {
                     return e || (e = "Unnamed"), (this.nameFromServer !== e || this.color !== t) && (this.nameFromServer = e, this.color = t, this.applyNameToSprite(), !0)
@@ -2893,9 +2893,9 @@
                         t = "Long Name" === this.nameFromServer,
                         s = e ? "" : this.nameFromServer,
                         a = this.name,
-                        n = this.nameColor,
+                        n = this.perk_color,
                         o;
-                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.nameColor) {
+                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.perk_color) {
                         let r = o || (this.isMe ? 16747520 : null);
                         h.events.$emit("minimap-create-node", this.pid, s, o, r)
                     }
@@ -3033,9 +3033,9 @@
                                 pid: e.pid,
                                 nickname: e.nameFromServer,
                                 skinUrl: e.skinUrl,
-                                color:e.perk_color || e.perk_color_picked
+                                color:e.perk_color
                             };
-                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.color && (t.nameColor = e.color), t
+                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.color && (t.perk_color = e.color), t
                         }),
                         i = JSON.stringify(t);
                     i = unescape(encodeURIComponent(i));
@@ -3726,8 +3726,8 @@
                         pid: a,
                         position: 1 + i.length,
                         text: n.name,
-                        color: n.nameColorCss || "#ffffff",
-                        bold: !!n.nameColor
+                        color: n.perk_colorCss || "#ffffff",
+                        bold: !!n.perk_color
                     })
                 }
                 return i
@@ -3902,7 +3902,7 @@
                     }
                     n.playerStats && t ? a.playerElement.innerHTML = `
         ${t.skinUrl?`<img src="${t.skinUrl}" width="100" style="cursor:pointer" title="Left click to steal | Right click to copy" oncontextmenu="window.copySkin('${t.skinUrl}')" onclick="window.yoinkSkin('${t.skinUrl}')"><br>`:""}
-        <font color="${"#"+(t.nameColorCss||"ffffff")}">${t.name}</font><br>${t.pid} : ${t.tagId}
+        <font color="${"#"+(t.perk_colorCss||"ffffff")}">${t.name}</font><br>${t.pid} : ${t.tagId}
         ` : a.playerElement.innerHTML = ""
                 }
                 findPlayerUnderMouse() {
@@ -7150,7 +7150,7 @@
                         staticClass: "player-info"
                     }, [s("div", {
                         style: {
-                            color: e.nameColor
+                            color: e.perk_color
                         },
                         attrs: {
                             id: "account-name"
@@ -7221,7 +7221,7 @@
                         xpAtNextLevel: 0,
                         loading: !1,
                         avatarUrl: null,
-                        nameColor: null,
+                        perk_color: null,
                         name: null
                     }),
                     created() {
