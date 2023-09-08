@@ -3033,9 +3033,9 @@
                                 pid: e.pid,
                                 nickname: e.nameFromServer,
                                 skinUrl: e.skinUrl,
-                                color:e.perk_color
+                                perk_color:e.perk_color
                             };
-                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.color && (t.perk_color = e.color), t
+                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.perk_color && (t.perk_color = e.perk_color), t
                         }),
                         i = JSON.stringify(t);
                     i = unescape(encodeURIComponent(i));
@@ -3726,7 +3726,7 @@
                         pid: a,
                         position: 1 + i.length,
                         text: n.name,
-                        color: n.perk_colorCss || "#ffffff",
+                        perk_color: n.perk_colorCss || "#ffffff",
                         bold: !!n.perk_color
                     })
                 }
