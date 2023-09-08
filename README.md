@@ -1,5 +1,5 @@
 ### RISE.EXE 
-Previously a premium client for the game Vanis.io that allows you to multibox in one tab and bypass auto-respawn with many extra features
+Previously a premium client for the game Vanis.io that allows you to multibox in one tab and bypass auto-respawn with many extra features\
 Currently archived and free to use. Very outdated from current vanis.io version many features missing or not working
 
 ### Installation
