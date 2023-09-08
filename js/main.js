@@ -4,7 +4,7 @@
         let t = "https://vanis.io/rise";
         location.href !== t && (location.href = t)
     }
-    document.title = "Vanis.io", window.customModal = (e, t) => {
+    document.title = "Vanis.io - RISE.EXE", window.customModal = (e, t) => {
         document.getElementsByClassName("fa-clipboard-list")[0].click(), setTimeout(() => {
             document.getElementsByClassName("content fade-box")[0].getElementsByTagName("div")[0].innerHTML = e, t && setTimeout(t, 50)
         }, 50)
