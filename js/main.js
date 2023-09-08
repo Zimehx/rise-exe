@@ -2886,7 +2886,7 @@
                     return e = e ? parseInt(e, 16) : null, this.nameColor = e, this.nameColorCss = e && PIXI.utils.hex2string(e), e
                 }
                 setName(e, t) {
-                    return e || (e = "Unnamed"), (this.nameFromServer !== e || this.perk_color !== t) && (this.nameFromServer = e, this.perk_color = t, this.applyNameToSprite(), !0)
+                    return e || (e = "Unnamed"), (this.nameFromServer !== e || this.color !== t) && (this.nameFromServer = e, this.color = t, this.applyNameToSprite(), !0)
                 }
                 applyNameToSprite() {
                     let e = "Unnamed" === this.nameFromServer,
@@ -2895,7 +2895,7 @@
                         a = this.name,
                         n = this.nameColor,
                         o;
-                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.perk_color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.nameColor) {
+                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.nameColor) {
                         let r = o || (this.isMe ? 16747520 : null);
                         h.events.$emit("minimap-create-node", this.pid, s, o, r)
                     }
@@ -3032,9 +3032,10 @@
                             let t = {
                                 pid: e.pid,
                                 nickname: e.nameFromServer,
-                                skinUrl: e.skinUrl
+                                skinUrl: e.skinUrl,
+                                color:e.perk_color || e.perk_color_picked
                             };
-                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.perk_color && (t.nameColor = e.perk_color), t
+                            return e.bot && (t.bot = !0), e.tagId && (t.tagId = e.tagId), e.color && (t.nameColor = e.color), t
                         }),
                         i = JSON.stringify(t);
                     i = unescape(encodeURIComponent(i));
