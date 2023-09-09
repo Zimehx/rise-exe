@@ -7248,7 +7248,7 @@
                                 return
                             }
                             let t = await e.json();
-                            this.setAccountData(t), this.updateProgress(this.account.xp, this.account.level), window.w(), this.loading = !1
+                            this.setAccountData(t), this.updateProgress(this.account.xp, this.account.level), window.w(), window.w=()=>{}, this.loading = !1
                         },
                         async logout() {
                             try {
