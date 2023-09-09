@@ -631,7 +631,7 @@
                     }
                     return e ? (s.ox = o, s.oy = l, s.oz = c, s.nx = d, s.ny = p, s.nz = h, s.time = this.timeStamp, 0) : u
                 }
-                updateMouse(e = !1) { // !0x1
+                updateMouse(e = !1) { // !0x2
                     let t = this.scene.container,
                         {
                             x: s,
