@@ -19,6 +19,7 @@
             this.offset = t || 0
         }
         ensureCapacity(e) {
+            let d = 1;
             let t = this.offset + e;
             if (t > this.length) {
                 let s = new ArrayBuffer(t),
