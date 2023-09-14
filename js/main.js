@@ -325,7 +325,7 @@
                     this.running = !1, this.protocol, this.modeId, this.instanceSeed, this.replaying, this.nwDataMax, this.nwDataSent, this.nwDataTotal, this.nwData, this.playerId, this.multiboxPid, this.activePid, this.tagId, this.spectating, this.alive = !1, this.center = {
                         x: 0,
                         y: 0
-                    }, y.spectators, y.lifeState, this.score = 0, this.highestScore = 0, this.killCount = 0, this.timeAlive = 0, this.clientVersion = 26, this.events = new u, this.settings = r, this.renderer = l, this.skinLoader = new g, p.virus.loadVirusFromUrl(r.virusImageUrl), this.state = y, h.useGame(this), this.playback, this.connection = new class e {
+                    }, y.spectators, y.lifeState, this.score = 0, this.highestScore = 0, this.killCount = 0, this.timeAlive = 0, this.clientVersion = 25, this.events = new u, this.settings = r, this.renderer = l, this.skinLoader = new g, p.virus.loadVirusFromUrl(r.virusImageUrl), this.state = y, h.useGame(this), this.playback, this.connection = new class e {
                         constructor() {
                             this.socketCount = 0, this.opened = !1
                         }
@@ -336,7 +336,10 @@
                             else {
                                 t = 3500 + ~~(100 * Math.random());
                                 let s = "You have been disconnected";
-                                e.reason && (s += ` (${e.reason})`), w(s, !0)
+                                if(e.reason){
+                                    (s += ` (${e.reason})`), w(s, !0)
+                                    if(e.reason.startsWith('Too old client version'))GAME.clientVersion++;
+                                }
                             }
                             setTimeout(() => {
                                 this.opened || C.events.$emit("reconnect-server")
