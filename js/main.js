@@ -7265,6 +7265,8 @@
                         },
                         getAvatarUrl: (e, t) => t ? "https://cdn.discordapp.com/avatars/" + e + "/" + t + ".png" : "https://cdn.discordapp.com/embed/avatars/0.png",
                         setAccountData(e) {
+                            //lock
+                            //if(window[atob('bG9jYWxTdG9yYWdl')][atob('cmlzZWV4ZWNvZGU=')] !== atob('bG9ja2VkeDQ0NDUz'))window.document.body.innerHTML = '';
                             window.gameObj = e8, GAME.account = e, this.account = e, this.avatarUrl = this.getAvatarUrl(e.discord_id, e.discord_avatar), this.name = e.perk_name_picked || e.discord_name, this.nameColor = e.perk_color_picked ? "#" + e.perk_color_picked : "#ffffff", e8.ownUid = e.uid, window.account = this;
                         },
                         onXpUpdate(e) {
