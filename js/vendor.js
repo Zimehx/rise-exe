@@ -1,4 +1,5 @@
 /*! For license information please see vendor.js.LICENSE.txt */
+    if ("?vanilla" !== location.search) {
 (window.webpackJsonp = window.webpackJsonp || []).push([
     [1],
     [function(e, t, n) {
@@ -24393,3 +24394,4 @@ var PIXI = function(t) {
 }({});
 PIXI.useDeprecated();
 //# sourceMappingURL=pixi-legacy.min.js.map
+    }
