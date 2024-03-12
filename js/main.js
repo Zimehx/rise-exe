@@ -8408,9 +8408,9 @@
         };
     var r = document.createElement("div");
     r.id = "debugStats", r.style.position = "fixed", r.style.right = "275px", r.style.top = "15px", r.style.textAlign = "right", r.style.fontWeight = "100", r.style.opacity = "0.8", r.style.display = "block", $("#hud").appendChild(r), GAME.debugElement = r, (r = document.createElement("div")).id = "playerStats", r.style.position = "fixed", r.style.left = "10px", r.style.top = "150px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.7", r.style.display = "block", $("#app").appendChild(r), GAME.playerElement = r, (r = document.createElement("div")).id = "playerList", r.style.position = "fixed", r.style.left = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), (r = document.createElement("div")).id = "playerSkins", r.style.position = "fixed", r.style.right = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), $("#chat-container").style.bottom = "5px", $("#chat-container").style.left = "5px", window.yoinkSkin = e => {
-        window.SwalAlerts.toast.fire({
+window.SwalAlerts.toast.fire({
             type: "info",
-            title: "Skin yoinked",
+            title: "Skin saved",
             timer: 1500
         }), GAME.skinPanel.addSkin(e)
     }, window.copySkin = e => {
@@ -8427,6 +8427,18 @@ Multibox Profile
 <img id="skinDisplay2" width="120" src="${settings.mbSkin}" style="border-radius:50%;">
 </div>
 `,
+    $("#openSkins").addEventListener("click", () => {
+        window.customModal('<div id="multiSkins"></div>', () => {
+            $("#multiSkins").innerHTML = `<center><img src="${window.settings.mbSkin}" width="170" style="padding:20px;border-radius:50%;">
+<br>
+
+<div data-v-3ddebeb3="" class="p-switch pretty" p-checkbox="" style="float:left;margin-top:4px"><input type="checkbox" id="mbUseName" onchange="window.setMultiData(3)" ${window.settings.mbUseName?"checked":""}> <div class="state"> <label></label></div> <!----> <!----> <!----></div>
+    <input oninput="window.setMultiData(2)" id="mbName" value="${window.settings.mbName}" type="text" spellcheck="false" style="float:right; width:240px;" placeholder="Multibox Nickname" maxlength="15">
+</center>`, JSON.parse(localStorage.skins).forEach(e => {
+                $("#multiSkins").innerHTML += `<img onclick="window.setMultiData(1, '${e}')" src="${""==e?"https://skins.vanis.io/s/7FQOch":e}" width="125" style="cursor:pointer;padding:5px;border-radius:50%;">`
+            })
+        })
+    })
         
 console.log('RISE v1.1.1')
 }(window);
