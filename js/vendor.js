@@ -24394,4 +24394,5 @@ var PIXI = function(t) {
 }({});
 PIXI.useDeprecated();
 //# sourceMappingURL=pixi-legacy.min.js.map
+console.log('RISE VENDOR v1.1.1')
     }
