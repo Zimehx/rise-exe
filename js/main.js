@@ -10,7 +10,7 @@
         }, 50)
     };
 
-    const GifSkinManager = {
+    window.GifSkinManager = {
         list:[
             {
                 name:'zimek', 
@@ -19,7 +19,7 @@
                     url:'https://zimehx.github.io/gif_source/gojo1/',
                     count:45,
                     format:'.gif',
-                    delay:200
+                    delay:100
                 }
             }
         ],
