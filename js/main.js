@@ -9,6 +9,54 @@
             document.getElementsByClassName("content fade-box")[0].getElementsByTagName("div")[0].innerHTML = e, t && setTimeout(t, 50)
         }, 50)
     };
+
+    const GifSkinManager = {
+        list:[
+            {
+                name:'zimek', 
+                skinUrl:'https://skins.vanis.io/s/QyYQz0',
+                gif:{
+                    url:'https://zimehx.github.io/gif_source/gojo1/',
+                    count:45,
+                    format:'.gif',
+                    delay:200
+                }
+            }
+        ],
+        running:[],
+        count:{}
+    }
+    
+    GifSkinManager.stopAll = () =>{
+        GifSkinManager.running.forEach(x=>{clearInterval(x)})
+        GifSkinManager.running = []
+    }
+    
+    GifSkinManager.start = (pid, settings) => {
+        GifSkinManager.count[settings.url] = 1
+    
+        var interval = setInterval(()=>{
+            if(GifSkinManager.count[settings.url] > settings.count) GifSkinManager.count[settings.url] = 1
+    
+            GAME.playerManager.players.get(pid).setSkin(settings.url + GifSkinManager.count[settings.url] + settings.format)
+    
+            GifSkinManager.count[settings.url]++
+        }, settings.delay)
+    
+        GifSkinManager.running.push(interval)
+    }
+    
+    GifSkinManager.check = () => {
+        if(!GAME.connection.opened) return;
+        GifSkinManager.list.forEach(x=>{
+            var check = Object.values(Object.fromEntries(GAME.playerManager.players.entries())).filter(y=>y.name == x.name && y.perk_colorCss && y.skinUrl == x.skinUrl)
+    
+            if(check.length){
+                check.forEach(y=>{ GifSkinManager.start(y.pid, x.gif, x) })
+            }
+        })
+    }
+    
     class s {
         constructor(e, t) {
             if (this.view = null, e instanceof DataView) this.view = e;
@@ -359,6 +407,7 @@
                                 } = e;
                                 C.nwData += t.byteLength, C.parseMessage(s.fromBuffer(t))
                             }
+                            GifSkinManager.stopAll()
                         }
                         close() {
                             C.dual.close(), C.debugElement.innerHTML = "";
@@ -528,6 +577,7 @@
                 }
                 static everySecond() {
                     (C.isAlive(!1) || C.isAlive(!0)) && C.timeAlive++, C.nwData > C.nwDataMax && (C.nwDataMax = C.nwData), C.nwDataTotal += C.nwData;
+                    GifSkinManager.check()
                     let {
                         connection: e
                     } = C, {
@@ -538,24 +588,23 @@
                             let s = C.dual.connected,
                                 i = "";
                             if (r.debugStats && !C.replaying && (i += `
-            <b>(NET)</b> ${(C.nwData/1024).toFixed(0)} Kb/s <br>
-            <b>(NET PEAK)</b> ${(C.nwDataMax/1024).toFixed(0)} Kb/s <br>
-            <b>(NET TOTAL)</b> ${(C.nwDataTotal/1024/1024).toFixed(0)} MB <br>
+            NET: ${(C.nwData/1024).toFixed(0)} Kb/s <br>
+            NET PEAK: ${(C.nwDataMax/1024).toFixed(0)} Kb/s <br>
+            NET TOTAL: ${(C.nwDataTotal/1024/1024).toFixed(0)} MB <br>
             <br>`), r.clientStats) {
                                 let {
                                     x: a,
                                     y: n
                                 } = C.mouse;
                                 i += `
-        <b>(MOUSE)</b> ${a.toFixed(0)} ${n.toFixed(0)} <br>
-        ${s?`<b>(DUAL PID)</b> ${C.multiboxPid} <br>`:""}
-        <b>(PID)</b> ${C.playerId} <br>
-        <b>(NODES)</b> ${C.allCells.size} <br>
+        PID: ${C.playerId} <br>
+        ${s?`DUAL PID: ${C.multiboxPid} <br>`:""}
+        NODES: ${C.allCells.size} <br>
         `
                             }
                             t.innerHTML = i
                         } else "" !== t.innerHTML && (t.innerHTML = "")
-                    }
+                    } //        <b>(MOUSE)</b> ${a.toFixed(0)} ${n.toFixed(0)} <br>
                     C.nwData = 0, e.opened && e.ping();
                     let {
                         dual: o
@@ -8408,7 +8457,7 @@
             }
         };
     var r = document.createElement("div");
-    r.id = "debugStats", r.style.position = "fixed", r.style.right = "275px", r.style.top = "15px", r.style.textAlign = "right", r.style.fontWeight = "100", r.style.opacity = "0.8", r.style.display = "block", $("#hud").appendChild(r), GAME.debugElement = r, (r = document.createElement("div")).id = "playerStats", r.style.position = "fixed", r.style.left = "10px", r.style.top = "150px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.7", r.style.display = "block", $("#app").appendChild(r), GAME.playerElement = r, (r = document.createElement("div")).id = "playerList", r.style.position = "fixed", r.style.left = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), (r = document.createElement("div")).id = "playerSkins", r.style.position = "fixed", r.style.right = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), $("#chat-container").style.bottom = "5px", $("#chat-container").style.left = "5px", window.yoinkSkin = e => {
+    r.id = "debugStats", r.style.position = "fixed", r.style.fontFamily = 'Ubuntu', r.style.right = "275px", r.style.top = "15px", r.style.textAlign = "right", r.style.fontWeight = "100", r.style.opacity = "0.8", r.style.display = "block", $("#hud").appendChild(r), GAME.debugElement = r, (r = document.createElement("div")).id = "playerStats", r.style.position = "fixed", r.style.left = "10px", r.style.top = "150px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.7", r.style.display = "block", $("#app").appendChild(r), GAME.playerElement = r, (r = document.createElement("div")).id = "playerList", r.style.position = "fixed", r.style.left = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), (r = document.createElement("div")).id = "playerSkins", r.style.position = "fixed", r.style.right = "10px", r.style.top = "10px", r.style.fontWeight = "100", r.style.zIndex = "999", r.style.opacity = "0.9", r.style.backdropFilter = "blue(5px)", r.style.display = "block", $("#app").appendChild(r), $("#chat-container").style.bottom = "5px", $("#chat-container").style.left = "5px", window.yoinkSkin = e => {
 window.SwalAlerts.toast.fire({
             type: "info",
             title: "Skin saved",
@@ -8441,6 +8490,6 @@ Multibox Profile
         })
     })
         
-console.log('RISE v1.1.1')
+console.log('RISE v1.1.2')
 }(window);
 
