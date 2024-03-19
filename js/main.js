@@ -1017,7 +1017,7 @@
                 autoRespawn: !1,
                 mouseFreezeSoft: !0,
                 drawDelay: 120,
-                switchDistance:30,
+                switchDistance:8,
                 cameraMoveDelay: 150,
                 cameraZoomDelay: 150,
                 cameraZoomSpeed: 10,
