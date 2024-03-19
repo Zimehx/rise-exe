@@ -670,7 +670,7 @@
                             } = this;
                             if (y.connected) {
                                 let w = y.getDistanceFromOwner();
-                                f = !!r.singleView || null == w || w > 8e3
+                                f = !!r.singleView || null == w || w > r.switchDistance
                             }
                         }
                         let I = 0,
@@ -1017,6 +1017,7 @@
                 autoRespawn: !1,
                 mouseFreezeSoft: !0,
                 drawDelay: 120,
+                switchDistance:8000,
                 cameraMoveDelay: 150,
                 cameraZoomDelay: 150,
                 cameraZoomSpeed: 10,
@@ -4848,7 +4849,33 @@
                                 return e.change("drawDelay", t)
                             }
                         }
-                    })]), e._v(" "), s("div", {
+                    })]), e._v(" "),
+                    
+                    s("div", {
+                        staticClass: "slider-option"
+                    },
+                    [e._v("\n                Dual camera switch distance "), s("span", {
+                        staticClass: "right"
+                    }, [e._v(e._s(e.switchDistance))]), e._v(" "), s("input", {
+                        staticClass: "slider draw-delay",
+                        attrs: {
+                            type: "range",
+                            min: "0",
+                            max: "30",
+                            step: "1"
+                        },
+                        domProps: {
+                            value: e.switchDistance
+                        },
+                        on: {
+                            input: function(t) {
+                                return e.change("switchDistance", t)
+                            }
+                        }
+                    })]), e._v(" "),
+                    
+                    
+                    s("div", {
                         staticClass: "slider-option"
                     }, [e._v("\n            Camera panning delay "), s("span", {
                         staticClass: "right"
@@ -5413,6 +5440,7 @@
                     mbAutorespawn: b.mbAutorespawn,
                     mouseFreezeSoft: b.mouseFreezeSoft,
                     drawDelay: b.drawDelay,
+                    switchDistance: b.switchDistance,
                     cameraMoveDelay: b.cameraMoveDelay,
                     cameraZoomDelay: b.cameraZoomDelay,
                     cameraZoomSpeed: b.cameraZoomSpeed,
@@ -8490,6 +8518,6 @@ Multibox Profile
         })
     })
         
-console.log('RISE v1.1.2')
+console.log('RISE v1.1.3')
 }(window);
 
