@@ -670,7 +670,7 @@
                             } = this;
                             if (y.connected) {
                                 let w = y.getDistanceFromOwner();
-                                f = !!r.singleView || null == w || w > r.switchDistance
+                                f = !!r.singleView || null == w || w > r.switchDistance * 1000
                             }
                         }
                         let I = 0,
@@ -1017,7 +1017,7 @@
                 autoRespawn: !1,
                 mouseFreezeSoft: !0,
                 drawDelay: 120,
-                switchDistance:8000,
+                switchDistance:30,
                 cameraMoveDelay: 150,
                 cameraZoomDelay: 150,
                 cameraZoomSpeed: 10,
@@ -8518,6 +8518,6 @@ Multibox Profile
         })
     })
         
-console.log('RISE v1.1.3')
+console.log('RISE v1.1.2')
 }(window);
 
