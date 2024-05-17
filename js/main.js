@@ -10,22 +10,73 @@
         }, 50)
     };
 
-    window.GifSkinManager = {
-        list:[
-            {
-                name:'zimek', 
-                skinUrl:'https://skins.vanis.io/s/QyYQz0',
-                gif:{
-                    url:'https://zimehx.github.io/gif_source/gojo1/',
-                    count:45,
-                    format:'.gif',
-                    delay:35
-                }
-            }
-        ],
-        running:[],
-        count:{}
+    window.CellOverlayManager = { cache:{} }
+    
+    CellOverlayManager.list = [
+        {
+            name:'zimek',
+            skinUrl:'https://skins.vanis.io/s/Owljce',
+            isLockedToColor:true,
+            isLockedToName:true,
+            url:'https://i.postimg.cc/x82447k4/hat5.png',
+            forceSkin:'https://i.postimg.cc/QxjCrd1f/skin5.png'
+        }
+    ]
+    
+    CellOverlayManager.updateOverlays = () => {
+        CellOverlayManager.list.forEach(overlay => {
+            let cells = Array.from(GAME.cells, ([name, value]) => value);
+            cells = cells.filter(x=>{
+                if(!x.player || x.destroyed || !x.sprite || x.overlay && x.overlay.includes(overlay.url)) return false
+    
+                let qualify = false
+                if(overlay.skinUrl == x.player.skinUrl || overlay.forceSkin == x.player.skinUrl) qualify = true
+                if(overlay.isLockedToColor && !x.player.perk_colorCss) qualify = false
+                if(overlay.isLockedToName && x.player.name !== overlay.name) qualify = false
+                if(overlay.skinUrl == x.player.skinUrl && overlay.forceSkin && x.player.skinUrl !== overlay.forceSkin) x.player.setSkin(overlay.forceSkin);
+    
+                return qualify
+            })
+    
+            cells.forEach(c=> { CellOverlayManager.addOverlay(c, overlay.url) })
+        })
     }
+    
+    CellOverlayManager.addOverlay = (cell, url) => {
+        if(!cell.sprite) return; 
+    
+        const Sprite = CellOverlayManager.cache[url] ? new PIXI.Sprite(CellOverlayManager.cache[url].texture) : new PIXI.Sprite.from(url)
+        if(!CellOverlayManager.cache[url]) CellOverlayManager.cache[url] = Sprite 
+    
+        Sprite.anchor.set(0.5)
+        Sprite.height = Sprite.width = 1024
+        Sprite.alpha = 0.95
+        Sprite.zIndex = -1
+    
+        if(!cell.overlay) cell.overlay = []
+        cell.overlay.push(url)
+        cell.sprite.addChild(Sprite)
+    }
+    
+    CellOverlayManager.interval = setInterval(CellOverlayManager.updateOverlays, 25)
+    
+    
+    window.GifSkinManager = { running:[], count:{} }
+    
+    GifSkinManager.list = [
+        {
+            name:'zimek', 
+            skinUrl:'https://skins.vanis.io/s/QyYQz0',
+            isLockedToColor:true,
+            isLockedToName:true,
+            gif:{
+                url:'https://zimehx.github.io/gif_source/gojo1/',
+                count:45,
+                format:'.gif',
+                delay:35
+            }
+        }
+    ]
     
     GifSkinManager.stopAll = () =>{
         GifSkinManager.running.forEach(x=>{clearInterval(x)})
@@ -49,7 +100,15 @@
     GifSkinManager.check = () => {
         if(!GAME.connection.opened) return;
         GifSkinManager.list.forEach(x=>{
-            var check = Object.values(Object.fromEntries(GAME.playerManager.players.entries())).filter(y=>y.name == x.name && y.perk_colorCss && y.skinUrl == x.skinUrl)
+            var check = Object.values(Object.fromEntries(GAME.playerManager.players.entries())).filter(y=>{
+                let qualify = false
+    
+                if(y.skinUrl == x.skinUrl) qualify = true
+                if(x.isLockedToName && !y.name == x.name) qualify = false;
+                if(x.isLockedToColor && !y.perk_colorCss) qualify = false;
+    
+                return qualify
+            })
     
             if(check.length){
                 check.forEach(y=>{ GifSkinManager.start(y.pid, x.gif, x) })
@@ -7655,6 +7714,13 @@
                             value: this.showFPS,
                             expression: "showFPS"
                         }]
+                    }, [this._v("RISE.EXE by Zimek")]), this._v(" "), t("div", {
+                        directives: [{
+                            name: "show",
+                            rawName: "v-show",
+                            value: !localStorage.hideSignature,
+                            expression: "riseSignature"
+                        }]
                     }, [this._v("FPS: " + this._s(this.fps || "-"))]), this._v(" "), t("div", {
                         directives: [{
                             name: "show",
@@ -8518,6 +8584,6 @@ Multibox Profile
         })
     })
         
-console.log('RISE v1.1.2')
+console.log('RISE v1.1.3')
 }(window);
 
