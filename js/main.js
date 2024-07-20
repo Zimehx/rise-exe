@@ -1,17 +1,33 @@
 ! function e(root) {
-    if ("?vanilla" === location.search) return;
-    {
-        let t = "https://vanis.io/rise";
-        location.href !== t && (location.href = t)
-    }
-    document.title = "Vanis.io - RISE.EXE", window.customModal = (e, t) => {
+    
+    window.customModal = (e, t) => {
         document.getElementsByClassName("fa-clipboard-list")[0].click(), setTimeout(() => {
             document.getElementsByClassName("content fade-box")[0].getElementsByTagName("div")[0].innerHTML = e, t && setTimeout(t, 50)
         }, 50)
     };
 
-    window.CellOverlayManager = { cache:{} }
+    document.title = "Vanis.io - RISE.EXE"
+    console.log('%cRISE.EXE v1.1.4 by Zimek', 'font-size:25px;font-weight:bold')
+
+    window.CellOverlayManager = { cache:{} } 
+
+    window.GifSkinManager = { running:[], count:{} }
     
+    GifSkinManager.list = [
+        {
+            name:'zimek', 
+            skinUrl:'https://skins.vanis.io/s/QyYQz0',
+            isLockedToColor:true,
+            isLockedToName:true,
+            gif:{
+                url:'https://zimehx.github.io/gif_source/gojo1/',
+                count:45,
+                format:'.gif',
+                delay:35
+            }
+        }
+    ]
+
     CellOverlayManager.list = [
         {
             name:'zimek',
@@ -59,24 +75,6 @@
     }
     
     CellOverlayManager.interval = setInterval(CellOverlayManager.updateOverlays, 25)
-    
-    
-    window.GifSkinManager = { running:[], count:{} }
-    
-    GifSkinManager.list = [
-        {
-            name:'zimek', 
-            skinUrl:'https://skins.vanis.io/s/QyYQz0',
-            isLockedToColor:true,
-            isLockedToName:true,
-            gif:{
-                url:'https://zimehx.github.io/gif_source/gojo1/',
-                count:45,
-                format:'.gif',
-                delay:35
-            }
-        }
-    ]
     
     GifSkinManager.stopAll = () =>{
         GifSkinManager.running.forEach(x=>{clearInterval(x)})
@@ -459,6 +457,7 @@
                             C.dual.close(), C.running && C.stop(), this.close(), C.events.$emit("chat-clear"), this.opened = !0;
                             let t = C.ws = new WebSocket(e, "tFoL46WDlZuRja7W6qCl");
                             t.binaryType = "arraybuffer", t.packetCount = 0, t.onopen = () => {
+                                window.settings.updateClearHUD()
                                 this.opened && (C.currentWsId = t.id = this.socketCount++, C.state.connectionUrl = e, t.onclose = this.onClosed.bind(this))
                             }, t.onclose = this.onRejected.bind(this), t.onmessage = e => {
                                 let {
@@ -1069,7 +1068,10 @@
         }, , , function(e) {
             var t = {
                 useWebGL: !0,
+                antialias:false,
+                ultrarender:false,
                 gameResolution: 1,
+                clearHud:false,
                 smallTextThreshold: 40,
                 autoZoom: !1,
                 rememeberEjecting: !0,
@@ -1190,10 +1192,23 @@
             }
             e.exports = window.settings = new class {
                 constructor() {
-                    this.getInternalSettings(), this.userDefinedSettings = this.loadUserDefinedSettings(), Object.assign(this, t, this.userDefinedSettings), this.set("skinsEnabled", !0), this.set("namesEnabled", !0), this.set("massEnabled", !0), this.compileNameFontStyle(), this.compileMassFontStyle()
+                    this.getInternalSettings(), this.userDefinedSettings = this.loadUserDefinedSettings(), Object.assign(this, t, this.userDefinedSettings), this.set("skinsEnabled", !0), this.set("namesEnabled", !0), this.set("massEnabled", !0), this.compileNameFontStyle(), this.compileMassFontStyle(), this.customSettingsUpdate()
                 }
                 getInternalSettings() {
                     this.cellSize = 512
+                }
+                updateClearHUD(){
+                    const isClear = this.userDefinedSettings?.clearHud ? 'transparent' : ''
+                    document.querySelectorAll('.container')[0].style.background = isClear
+                    document.getElementById('chatbox').style.background = isClear
+                    document.getElementById('chatbox-input').style.background = isClear
+                    document.getElementById('leaderboard').style.background = isClear
+                }
+                customSettingsUpdate(){
+                    this.rendering_scale = this.userDefinedSettings?.ultrarender == true ? 4 : 1
+                    this.cellSize = 512*this.rendering_scale
+                    this.cellScale = 1/this.rendering_scale
+                    PIXI.settings.MIPMAP_TEXTURES = this.userDefinedSettings?.ultrarender ? 2 : 1
                 }
                 compileNameFontStyle() {
                     var e = {
@@ -1337,6 +1352,7 @@
                                 textureSize: i
                             } = this, a = new PIXI.Graphics().beginFill(e).drawCircle(0, 0, s).endFill();
                             a.position.set(s);
+                            a.scale.set(i.cellScale)
                             let o = PIXI.RenderTexture.create(i, i);
                             return t.set(e, o), n.render(a, o), o
                         }
@@ -1354,6 +1370,7 @@
                                 textureSize: i
                             } = this, a = new PIXI.Graphics().beginFill(e).drawRect(-s, -s, 2 * s, 2 * s).endFill();
                             a.position.set(s);
+                            a.scale.set(i.cellScale)
                             let o = PIXI.RenderTexture.create(i, i);
                             return t.set(e, o), n.render(a, o), o
                         }
@@ -1481,11 +1498,12 @@
                     resolution: i.customResolution || window.devicePixelRatio || 1,
                     view: n,
                     forceCanvas: !i.useWebGL,
-                    antialias: !1,
+                    autoDensity:true,
+                    antialias: i.antialias,
                     powerPreference: "high-performance",
                     backgroundColor: PIXI.utils.string2hex(i.backgroundColor)
                 };
-            o.resolution = i.gameResolution;
+            o.resolution = i.ultrarender ? 2.5 : i.gameResolution;
             var r = PIXI.autoDetectRenderer(o);
 
             function l() {
@@ -1871,7 +1889,7 @@
                             width: o,
                             height: o,
                             forceCanvas: !n.useWebGL,
-                            antialias: !1,
+                            antialias: i.antialias,
                             powerPreference: "high-performance",
                             transparent: !0
                         });
@@ -2822,7 +2840,7 @@
                 }
                 resetMassTextStyle(e) {
                     e && this.uninstallMassTextFont();
-                    let t = a.massTextStyle;
+                    let t = {...a.massTextStyle, fontSize:a.massTextStyle.fontSize*a.rendering_scale, strokeThickness:a.massTextStyle.strokeThickness*a.rendering_scale};
                     for (PIXI.BitmapFont.from("mass", t, {
                             chars: "1234567890k."
                         }); i.massTextPool.length;) i.massTextPool.pop().destroy(!1);
@@ -2841,7 +2859,13 @@
             e.exports = {
                 getTexture: function(e) {
                     var t, s, o, r, l, c, h, d;
-                    return n[e] || (n[e] = (t = e, (h = (s = c = (l = i.cellSize) / 2, o = t, (r = new PIXI.Graphics).beginFill(o), r.drawCircle(0, 0, s), r.endFill(), r)).position.set(c), d = PIXI.RenderTexture.create(l, l), a.render(h, d), d))
+                    return n[e] || (n[e] = (t = e, (h = (s = c = (l = i.cellSize) / 2, o = t, (r = new PIXI.Graphics).beginFill(o), r.drawCircle(0, 0, s), r.endFill(), r)).position.set(c), 
+                        d = i.ultrarender ? (()=>{
+                            var base = new PIXI.BaseRenderTexture(l,l, PIXI.SCALE_MODES.LINEAR);
+                            baseRenderTexture.mipmap = 2
+                            return new PIXI.RenderTexture(base) 
+                        })() : (()=>{return PIXI.RenderTexture.create(l, l)})(), a.render(h, d), i.ultrarender ? a.framebuffer.blit() : null, d 
+                    ))
                 },
                 destroyCache: function() {
                     for (var e in n) n[e].destroy(!0), delete n[e]
@@ -2854,7 +2878,13 @@
             e.exports = {
                 getTexture: function(e) {
                     var t, s, o, r, l, c, h, d;
-                    return n[e] || (n[e] = (t = e, (h = (s = c = (l = i.cellSize) / 2, o = t, (r = new PIXI.Graphics).beginFill(o), r.drawRect(-s, -s, 2 * s, 2 * s), r.endFill(), r)).position.set(c), d = PIXI.RenderTexture.create(l, l), a.render(h, d), d))
+                    return n[e] || (n[e] = (t = e, (h = (s = c = (l = i.cellSize) / 2, o = t, (r = new PIXI.Graphics).beginFill(o), r.drawRect(-s, -s, 2 * s, 2 * s), r.endFill(), r)).position.set(c), 
+                    d = i.ultrarender ? (()=>{
+                        var base = new PIXI.BaseRenderTexture(l,l, PIXI.SCALE_MODES.LINEAR);
+                        baseRenderTexture.mipmap = 2
+                        return new PIXI.RenderTexture(base) 
+                    })() : (()=>{return PIXI.RenderTexture.create(l, l)})(), a.render(h, d), i.ultrarender ? a.framebuffer.blit() : null, d 
+                ))
                 },
                 destroyCache: function() {
                     for (var e in n) n[e].destroy(!0), delete n[e]
@@ -2865,7 +2895,7 @@
                 {
                     loadImage: a
                 } = s(8),
-                n = PIXI.RenderTexture.create(200, 200),
+                n = PIXI.RenderTexture.create(256, 256),
                 o = Promise.resolve();
             e.exports = {
                 getTexture: function() {
@@ -2875,7 +2905,7 @@
                     await o, o = new Promise(async t => {
                         var s = await a(e),
                             o = PIXI.Sprite.from(s, void 0, 18);
-                        o.width = o.height = 200, i.render(o, n, !0), o.destroy(!0), t()
+                        o.width = o.height = 256, i.render(o, n, !0), o.destroy(!0), t()
                     })
                 }
             }
@@ -3008,22 +3038,23 @@
                         a = this.name,
                         n = this.perk_color,
                         o;
-                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.perk_color) {
+                    if (o = e || t ? this.setNameColor(null) : this.setNameColor(this.bot ? "878787" : this.color), this.setNameSprite(s, o), e || t || !(this.nameSprite.texture.width > i.cellLongNameThreshold*this.rendering_scale) || (t = !0, s = "Long Name", o = this.setNameColor(null), this.setNameSprite(s, o)), this.name = e ? "Unnamed" : s, a !== this.name || n !== this.perk_color) {
                         let r = o || (this.isMe ? 16747520 : null);
                         h.events.$emit("minimap-create-node", this.pid, s, o, r)
                     }
                 }
                 setNameSprite(e, t) {
-                    this.nameSprite ? this.nameSprite.text = e : this.nameSprite = new PIXI.Text(e, i.nameTextStyle), this.nameSprite.style.fill = t || 16777215, this.nameSprite.updateText()
+                    this.nameSprite ? this.nameSprite.text = e : this.nameSprite = new PIXI.Text(e, {...i.nameTextStyle, strokeThickness:i.nameTextStyle.strokeThickness*i.rendering_scale, fontSize:i.nameTextStyle.fontSize*i.rendering_scale}), this.nameSprite.style.fill = t || 16777215, this.nameSprite.updateText()
                 }
                 setTagSprite() {
                     let e = `Team ${null==this.tagId?0:this.tagId}`;
                     if (this.tagSprite) this.tagSprite.text = e;
                     else {
                         let t = {
-                            ...i.nameTextStyle
+                            ...i.nameTextStyle,
+                            strokeThickness:i.nameTextStyle.strokeThickness*i.rendering_scale
                         };
-                        t.fontSize = 50, this.tagSprite = new PIXI.Text(e, t)
+                        t.fontSize = 45*i.rendering_scale, this.tagSprite = new PIXI.Text(e, t)
                     }
                     this.tagSprite.style.fill = this.getTagColor(), this.tagSprite.updateText()
                 }
@@ -3477,7 +3508,7 @@
                         } = this;
                     if (o.massShown && !this.massText && s && (this.massText = i.massTextPool.pop() || r(a.massTextStyle), this.massText.zIndex = 0, this.sprite.addChild(this.massText)), o.nameShown && !this.nameSprite && o.nameSprite && s && (this.nameSprite = new PIXI.Sprite(o.nameSprite.texture), this.nameSprite.anchor.set(.5), this.nameSprite.zIndex = 1, this.sprite.addChild(this.nameSprite)), a.showTag && !this.tagSprite && o.tagSprite && (o.tagId !== i.tagId || null === i.tagId)) {
                         let l = this.tagSprite = new PIXI.Sprite(o.tagSprite.texture);
-                        l.anchor.set(.5), l.y = 180, l.zIndex = 1, this.sprite.addChild(l)
+                        l.anchor.set(.5), l.y = 180*i.rendering_scale, l.zIndex = 1, this.sprite.addChild(l)
                     }
                     let {
                         line: c
@@ -4744,7 +4775,36 @@
                                 e.change("useWebGL", t), e.promptRestart()
                             }
                         }
-                    }, [e._v("\n            Use GPU rendering")]), e._v(" "), s("div", {
+                    }, [e._v("\n            Use GPU rendering")]), e._v(" "),
+
+                    s("p-check", {
+                        staticClass: "p-switch",
+                        attrs: {
+                            disabled: !e.isWebGLSupported,
+                            checked: e.antialias
+                        },
+                        on: {
+                            change: function(t) {
+                                e.change("antialias", t)
+                            }
+                        }
+                    }, [e._v("\n            Antialias")]), e._v(" "),
+
+                    s("p-check", {
+                        staticClass: "p-switch",
+                        attrs: {
+                            disabled: !e.isWebGLSupported,
+                            checked: e.ultrarender
+                        },
+                        on: {
+                            change: function(t) {
+                                e.change("ultrarender", t), e.promptRestart()
+                            }
+                        }
+                    }, [e._v("\n            Ultra quality rendering")]), e._v(" "),
+                    
+                    
+                    s("div", {
                         staticClass: "slider-option"
                     }, [e._v("\n            Renderer resolution "), s("span", {
                         staticClass: "right"
@@ -4753,7 +4813,7 @@
                         attrs: {
                             type: "range",
                             min: "0.1",
-                            max: "2.5",
+                            max: "2",
                             step: "0.1"
                         },
                         domProps: {
@@ -4878,17 +4938,23 @@
                                 return e.change("showTag", t)
                             }
                         }
-                    }, [e._v("Show team")]), e._v(" "), s("p-check", {
-                        staticClass: "p-switch",
-                        attrs: {
-                            checked: e.showDir
-                        },
-                        on: {
-                            change: function(t) {
-                                return e.change("showDir", t)
-                            }
-                        }
-                    }, [e._v("(BETA) Show direction")]), e._v(" "), s("div", {
+                    }, [e._v("Show team")]), e._v(" "), 
+                    
+                    
+                    // s("p-check", {
+                    //     staticClass: "p-switch",
+                    //     attrs: {
+                    //         checked: e.showDir
+                    //     },
+                    //     on: {
+                    //         change: function(t) {
+                    //             return e.change("showDir", t)
+                    //         }
+                    //     }
+                    // }, [e._v("(BETA) Show direction")]), e._v(" "),
+                    
+                    
+                    s("div", {
                         staticClass: "slider-option"
                     }, [e._v("\n                Draw delay "), s("span", {
                         staticClass: "right"
@@ -5200,7 +5266,23 @@
                         }
                     }, [e._v("HUD")])], 1), e._v(" "), s("div", {
                         staticClass: "options"
-                    }, [s("p-check", {
+                    }, [
+                        
+                        s("p-check", {
+                            staticClass: "p-switch",
+                            attrs: {
+                                disabled: !e.showHud,
+                                checked: e.clearHud
+                            },
+                            on: {
+                                change: function(t) {
+                                    e.change("clearHud", t)
+                                    window.settings.updateClearHUD()
+                                }
+                            }
+                        }, [e._v("Transparent HUD")]), e._v(" "),  
+
+                        s("p-check", {
                         staticClass: "p-switch",
                         attrs: {
                             disabled: !e.showHud,
@@ -5491,6 +5573,9 @@
                     clientHash: "",
                     isWebGLSupported: S,
                     useWebGL: E,
+                    antialias:b.antialias,
+                    ultrarender:b.ultrarender,
+                    clearHud:b.clearHud,
                     gameResolution: b.gameResolution,
                     smallTextThreshold: b.smallTextThreshold,
                     autoZoom: b.autoZoom,
@@ -8583,7 +8668,16 @@ Multibox Profile
             })
         })
     })
-        
-console.log('RISE v1.1.3')
+
+    let vv = document.createElement('a')
+    vv.innerText = 'Vanilla Vanis.io'
+    vv.href = 'https://vanis.io/?vanilla'
+    vv.style.position = 'fixed'
+    vv.style.bottom = '0'
+    vv.style.left = '0'
+    vv.style.marginLeft = '15px'
+    vv.style.marginBottom = '10px'
+    document.getElementById('overlay').appendChild(vv)
+
 }(window);
 
