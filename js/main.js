@@ -42,19 +42,19 @@
     CellOverlayManager.updateOverlays = () => {
         CellOverlayManager.list.forEach(overlay => {
             let cells = Array.from(GAME.cells, ([name, value]) => value);
-            cells = cells.filter(x=>{
+            cells = cells.forEach(x=>{
                 if(!x.player || x.destroyed || !x.sprite || x.overlay && x.overlay.includes(overlay.url)) return false
     
                 let qualify = false
                 if(overlay.skinUrl == x.player.skinUrl || overlay.forceSkin == x.player.skinUrl) qualify = true
-                if(overlay.isLockedToColor && !x.player.perk_colorCss) qualify = false
+                if(overlay.isLockedToColor && !x.player.perk_colorCss && x.player.perk_colorCss !== '#878787') qualify = false
                 if(overlay.isLockedToName && x.player.name !== overlay.name) qualify = false
-                if(qualify && overlay.forceSkin && x.player.skinUrl !== overlay.forceSkin) x.player.setSkin(overlay.forceSkin);
     
-                return qualify
+                if(qualify === true){
+                    if(overlay.forceSkin && x.player.skinUrl !== overlay.forceSkin) x.player.setSkin(overlay.forceSkin);
+                     CellOverlayManager.addOverlay(x, overlay.url)
+                }
             })
-    
-            cells.forEach(c=> { CellOverlayManager.addOverlay(c, overlay.url) })
         })
     }
     
@@ -65,7 +65,7 @@
         if(!CellOverlayManager.cache[url]) CellOverlayManager.cache[url] = Sprite 
     
         Sprite.anchor.set(0.5)
-        Sprite.height = Sprite.width = 1024
+        Sprite.height = Sprite.width = 1024*window.settings.rendering_scale
         Sprite.alpha = 0.95
         Sprite.zIndex = -1
     
@@ -1352,7 +1352,7 @@
                                 textureSize: i
                             } = this, a = new PIXI.Graphics().beginFill(e).drawCircle(0, 0, s).endFill();
                             a.position.set(s);
-                            a.scale.set(i.cellScale)
+                          //  a.scale.set(i.cellScale)
                             let o = PIXI.RenderTexture.create(i, i);
                             return t.set(e, o), n.render(a, o), o
                         }
@@ -1370,7 +1370,7 @@
                                 textureSize: i
                             } = this, a = new PIXI.Graphics().beginFill(e).drawRect(-s, -s, 2 * s, 2 * s).endFill();
                             a.position.set(s);
-                            a.scale.set(i.cellScale)
+                          //  a.scale.set(i.cellScale)
                             let o = PIXI.RenderTexture.create(i, i);
                             return t.set(e, o), n.render(a, o), o
                         }
